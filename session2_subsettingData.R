@@ -1,21 +1,34 @@
 ###### Subsetting data
 # Mastering R's subsetting operators is important for performing complex operations on any type of data.
 # Let's start with vectors.
+# Creat a named numeric vector
 x <- c(5.4, 6.2, 7.1, 4.8, 7.5)
 names(x) <- c('a', 'b', 'c', 'd', 'e')
 x
 
 ### Accessing elements using indices.
 x[1] # [n] : get the nth element 
-x[c(2, 3)] # get multiple elements
-x[2:4] 
+
+# [] is a function meaning: get the nth element
+
+x[c(3,5)] # get multiple elements
+x[3:5] # : creates a sequence of numbers from left to right
 # Vector numbering in R starts with 1. 
 
-# We can also remove elements.
+# What happens when we go beyond the length of the vector?
+x[10]
+x[0]
+
+# We can also skip elements.
 x[-1] # "-" : remove this element
 x[-c(1, 3)] # also works with multiple elements
 x[-1:3] # order of operations! 
 x[-(1:3)]
+
+################################################################
+# Challenge 1
+################################################################
+
 
 ### Subsetting by names
 x["a"]
@@ -26,51 +39,116 @@ x[-"a"]
 ### Subsetting by logical operations
 TrueOrFalse <- c(TRUE, FALSE, FALSE, TRUE, TRUE)
 x[TrueOrFalse] # "TrueOrFalse" can be an operation which results in a logical vector!
-# Removing by name
-x[names(x) != "a"] # The operation within [ ] gives a logical vector. 
-x[which(names(x) != "a")] # "which" converts logical values into indices. (Which ones are true.)
+
+x[x > 6]
+
+# step by step what actually happens
+x > 6
+
+# You can put any operations within [] 
+# Subsetting and skipping by name
+x[names(x) == "a"] # The operation within [ ] gives a logical vector. 
+x[names(x) != "a"] 
+
+# TIP: "which" converts logical values into indices. (Which ones are true.)
+x[which(names(x) != "a")] 
 x[-which(names(x) == "a")]
 
 
-# Removing based on multiple names?
+# Subsetting or skipping based on multiple names?
+# How to get the elements named "a" or "c"?
+
+
+
+
+
+
+
 x[names(x) %in% c("a", "c")] # %in% goes through each of the elements on its left, and ask if it occurs in the elements on it right. 
 x[!names(x) %in% c("a", "c")]
 
-# Other logical operations.
-x[x > 6]
 
 # Combining logical operations 
 # & : AND
 # | : OR
 # ! : NOT
-x[x > 6 & names(x) %in% c("c", "e")]
+
+# get elements in x that are greater than 4 and less than 7
+x > 4 & x < 7
+x[x > 4 & x < 7]
+################################################################
+# Challenge 2
+################################################################
+
+# NOTE: in R, && and || instead of & and | give different results. 
+
+### Handling special values 
+# What about missing values?
+y <- c("gene1" = 10, "gene2" = 20, "gene3" = 40, "gene4" = NA)
+# Extract values that are not NA
+
+
+
+
+
+y[!is.na(y)]
+
+### Subsetting factors 
+# Works the same way as vector subsetting 
+f <- factor(c("a", "a", "b", "c", "c", "d"))
+f[f == "a"]
+f[!f %in% c("b", "c")]
+# subsetting will not change factor levels 
+
 
 ### Subsetting matrices
 # Subsetting matrices works similarly as subsetting vectors, but on 2-dimensions. 
-m<- matrix(1:15, nrow = 3, ncol = 5)
+m <- matrix(1:15, nrow = 3, ncol = 5)
 m[1:2, 2:3] # Two arguments to [ ] : indices of rows and columns, separated by ","
 m[, 2:3] # leave one argument blank to get only columns or rows.
 m[, 4] # Subsetting only one column/row results in a vector.
+
+# if we want to keep the output as a matrix, we will need to use:
+m[, 4, drop = FALSE]
+
+# TIP: What happens when you subset a matrix using one argument?
+m[10]
+
+# populate the matrix by row
+m <- matrix(1:15, nrow = 3, ncol = 5, byrow = T)
+m[10]
+
+################################################################
+# Challenge 3
+################################################################
+# You can also subset matrix by row names and column names
+rownames(m) <- c("x", "y", "z")
 colnames(m) <- c("a", "b", "c", "d", "e")
-m[, c("a", "c")]
+m["x", c("a", "c")]
+
+
 
 ### Subsetting lists
-lst <- list(a = c("Learn", "R", "Today"),b = c(1:5), c = m)
+mylist <- list(a = c("Learn", "R", "Today"), b = seq(2, 10, by = 1.5), c = m)
 
-lst[c(1,2)] # using [ ] again
-class(lst[1]) # We get a list. 
+mylist[c(1,2)] # using [ ] again
+class(mylist[1]) # We get a list. 
 
 # How do we get the elements?
-lst[[1]] # Use [[ 
-class(lst[[1]])
+mylist[[1]] # Use [[ 
+class(mylist[[1]])
 
-lst["a"] # You can also use names
-lst[["a"]]
-lst$a
+mylist["a"] # You can also use names
+mylist[["a"]]
 
-# How to get the number 2 from lst? 
+# Use the $ function to extract by name 
+mylist$a
 
-lst[["a"]][2]
+################################################################
+# Challenge 4
+################################################################
+
+
 
 
 
