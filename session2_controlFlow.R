@@ -29,6 +29,17 @@ if (x > 10) {
   print("X is smaller than 5")
 }
 
+##############################################################
+# Challenge 6
+##############################################################
+
+
+
+
+# Tip: ifelse() function
+ifelse(x > 10, "X is larger than 10", "X is not larger than 10")
+
+
 ### Repeating operations
 
 # For loop: purpose- repeat a sequence of instructions under certain conditions
@@ -71,6 +82,13 @@ for(i in 1:5){
     result_vector <- c(result_vector, temp_value)
   }
 }
+
+##############################################################
+# Challenge 7
+##############################################################
+
+
+
 
 ### R is special! => everything in r is considered as a vector or a combination 
 # of serveral vectors
