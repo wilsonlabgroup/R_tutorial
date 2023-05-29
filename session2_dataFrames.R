@@ -31,7 +31,7 @@ mydf$Species
 
 # data frames are just lists!
 
-# characters are by default stored as factors.
+# check to see if characters are stored as factors.
 
 # Subsetting with logical operations
 mydf[mydf$Species == "versicolor", ]

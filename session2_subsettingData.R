@@ -1,7 +1,7 @@
 ###### Subsetting data
 # Mastering R's subsetting operators is important for performing complex operations on any type of data.
 # Let's start with vectors.
-# Creat a named numeric vector
+# Create a named numeric vector
 x <- c(5.4, 6.2, 7.1, 4.8, 7.5)
 names(x) <- c('a', 'b', 'c', 'd', 'e')
 x
@@ -28,8 +28,11 @@ x[-(1:3)]
 ################################################################
 # Challenge 1
 ################################################################
+x[c(2,3,4)]
+x[2:4]
+x[-c(1,5)]
 
-
+################################################################
 ### Subsetting by names
 x["a"]
 x[c("b","c")]
@@ -44,10 +47,13 @@ x[x > 6]
 
 # step by step what actually happens
 x > 6
+x[x < 5]
 
 # You can put any operations within [] 
 # Subsetting and skipping by name
 x[names(x) == "a"] # The operation within [ ] gives a logical vector. 
+x[names(x) == "a"]
+
 x[names(x) != "a"] 
 
 # TIP: "which" converts logical values into indices. (Which ones are true.)
@@ -58,7 +64,7 @@ x[-which(names(x) == "a")]
 # Subsetting or skipping based on multiple names?
 # How to get the elements named "a" or "c"?
 
-
+x[names(x) == c("a", "c")]
 
 
 
@@ -75,12 +81,21 @@ x[!names(x) %in% c("a", "c")]
 
 # get elements in x that are greater than 4 and less than 7
 x > 4 & x < 7
+
+
 x[x > 4 & x < 7]
 ################################################################
 # Challenge 2
 ################################################################
 
-# NOTE: in R, && and || instead of & and | give different results. 
+x > 6
+names(x) %in% c("c", "e")
+x > 6 & names(x) %in% c("c", "e")
+x[x > 6 & names(x) %in% c("c", "e")]
+
+# NOTE: in R, && and || instead of & and | give different results.
+x < 6 || names(x) %in% c("c", "e")
+
 
 ### Handling special values 
 # What about missing values?
@@ -104,6 +119,7 @@ f[!f %in% c("b", "c")]
 ### Subsetting matrices
 # Subsetting matrices works similarly as subsetting vectors, but on 2-dimensions. 
 m <- matrix(1:15, nrow = 3, ncol = 5)
+m
 m[1:2, 2:3] # Two arguments to [ ] : indices of rows and columns, separated by ","
 m[, 2:3] # leave one argument blank to get only columns or rows.
 m[, 4] # Subsetting only one column/row results in a vector.
@@ -121,18 +137,39 @@ m[10]
 ################################################################
 # Challenge 3
 ################################################################
+
+2*(1:20)
+seq(2, 40, by = 2)
+
+mymatrix <- matrix(seq(2, 40, by = 2), nrow = 4, ncol = 5, byrow = TRUE)
+mymatrix[3, c(2,4,5)]
+
 # You can also subset matrix by row names and column names
 rownames(m) <- c("x", "y", "z")
 colnames(m) <- c("a", "b", "c", "d", "e")
+m
 m["x", c("a", "c")]
 
 
 
 ### Subsetting lists
 mylist <- list(a = c("Learn", "R", "Today"), b = seq(2, 10, by = 1.5), c = m)
+mylist
+
+mylist[[2]]
+mylist$b
+
+mylist[[2]][4]
+
+mynumbers <- mylist[[2]]
+mynumbers
+
+mynumbers[mynumbers == 6.5]
+
+mylist$b[mylist$b > 6.5]
 
 mylist[c(1,2)] # using [ ] again
-class(mylist[1]) # We get a list. 
+class(mylist[c(1,2)]) # We get a list. 
 
 # How do we get the elements?
 mylist[[1]] # Use [[ 
@@ -143,7 +180,7 @@ mylist[["a"]]
 
 # Use the $ function to extract by name 
 mylist$a
-
+names(mylist)
 ################################################################
 # Challenge 4
 ################################################################

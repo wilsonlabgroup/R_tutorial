@@ -29,12 +29,6 @@ if (x > 10) {
   print("X is smaller than 5")
 }
 
-##############################################################
-# Challenge 6
-##############################################################
-
-
-
 
 # Tip: ifelse() function
 ifelse(x > 10, "X is larger than 10", "X is not larger than 10")
@@ -72,6 +66,16 @@ for(i in 1:5){
   }
 }
 
+##############################################################
+# Challenge 6
+##############################################################
+for(len in iris$Petal.Length){
+  if(len > 6){
+    print("length is greater than 6")
+  }
+}
+##############################################################
+
 # We can save results of these operations.
 result_vector <- c() # initialize empty vector // optional
 
@@ -82,12 +86,6 @@ for(i in 1:5){
     result_vector <- c(result_vector, temp_value)
   }
 }
-
-##############################################################
-# Challenge 7
-##############################################################
-
-
 
 
 ### R is special! => everything in r is considered as a vector or a combination 
@@ -107,19 +105,58 @@ x + y
 
 x <- c()
 system.time(
-  for(i in 1:4000){
+  for(i in 1:50000){
     x<-c(x,i) #here i is combined with previous contents of x
   }
 )
 
 
-x<-numeric(4000) #empty numeric vector
+x<-numeric(50000) #empty numeric vector
 system.time(
-  for(i in 1:4000){
+  for(i in 1:50000){
     x[i] <- i #changing value of particular element of x
   }
 )
 
 
+##############################################################
+# Challenge 7
+##############################################################
+iris_species <- as.character(unique(iris$Species))
+
+for (s in iris_species){
+  temp <- subset(iris, Species == s)
+  ave_width <- mean(temp$Sepal.Width)
+  if(ave_width < 3){
+    print(paste(c(as.character(s), ":average sepal width less than 3"), collapse =" "))
+  } else{
+    print(paste(c(as.character(s), ":average sepal width greater than 3"), collapse =" "))
+  }
+}
+
+# not covered:
+
+### use functions and apply()
+
+compare_width <- function(s){
+  temp <- subset(iris, Species == s)
+  ave_width <- mean(temp$Sepal.Width)
+  if(ave_width < 3){
+    print(paste(c(as.character(s), ":average sepal width less than 3"), collapse =" "))
+  } else{
+    print(paste(c(as.character(s), ":average sepal width greater than 3"), collapse =" "))
+  }
+}
+
+sapply(iris_species, compare_width)
+
+# use tidyverse()
+# https://www.tidyverse.org/
+
+iris %>% 
+  group_by(Species) %>% 
+  summarise(ave_width = mean(Sepal.Width)) %>% 
+  mutate(if_less3 = ifelse(ave_width < 3,"yes","no"))
 
 
+##############################################################
