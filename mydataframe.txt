@@ -1,0 +1,5 @@
+genes	length	target
+A	1000	TRUE
+B	30000	TRUE
+C	4000	FALSE
+D	1100	FALSE

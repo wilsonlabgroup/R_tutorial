@@ -1,0 +1,5 @@
+genes,length,target
+1,A,1000,TRUE
+2,B,30000,TRUE
+3,C,4000,FALSE
+4,D,1100,FALSE
